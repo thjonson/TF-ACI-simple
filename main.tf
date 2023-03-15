@@ -51,7 +51,7 @@ resource "aci_bridge_domain" "bridge_domain" {
   tenant_dn = aci_tenant.tenant.id
   #tenant_dn = data.aci_tenant.tenant.id
   name      = each.value.bd
-
+  relation_fv_rs_ctx = aci_vrf.vrf.id
 }
 resource "aci_subnet" "subnet" {
   for_each  = { for inst in local.instances : inst.key => inst }
