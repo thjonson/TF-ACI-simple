@@ -30,13 +30,13 @@ resource "aci_tenant" "tenant" {
 resource "aci_vrf" "vrf" {
   tenant_dn = aci_tenant.tenant.id
   #tenant_dn = data.aci_tenant.tenant.id
-  name = var.vrf
+  name      = var.vrf
 }
 
 resource "aci_application_profile" "application_profile" {
   tenant_dn = aci_tenant.tenant.id
   #tenant_dn = data.aci_tenant.tenant.id
-  name = var.app_prof
+  name      = var.app_prof
 }
 
 resource "aci_application_epg" "application_epg" {
@@ -47,9 +47,9 @@ resource "aci_application_epg" "application_epg" {
 }
 
 resource "aci_bridge_domain" "bridge_domain" {
-  for_each  = { for inst in local.instances : inst.key => inst }
-  tenant_dn = aci_tenant.tenant.id
-  #tenant_dn = data.aci_tenant.tenant.id
+  for_each           = { for inst in local.instances : inst.key => inst }
+  tenant_dn          = aci_tenant.tenant.id
+  #tenant_dn         = data.aci_tenant.tenant.id
   name               = each.value.bd
   relation_fv_rs_ctx = aci_vrf.vrf.id
 }
